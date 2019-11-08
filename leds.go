@@ -47,7 +47,7 @@ func (l *LED) Brightness() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return strconv.Atoi(string(b))
+	return strconv.Atoi(strings.Replace(string(b), "\n", "", -1))
 }
 
 // MaxBrightness returns the max brightness.
@@ -56,7 +56,7 @@ func (l *LED) MaxBrightness() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return strconv.Atoi(string(b))
+	return strconv.Atoi(strings.Replace(string(b), "\n", "", -1))
 }
 
 // Triggers returns the set of triggers for the LED.
@@ -66,7 +66,7 @@ func (l *LED) Triggers() ([]*Trigger, error) {
 		return nil, err
 	}
 
-	triggerStrs := strings.Split(string(b), " ")
+	triggerStrs := strings.Split(strings.Replace(string(b), "\n", "", -1), " ")
 	triggers := make([]*Trigger, len(triggerStrs))
 
 	for i, triggerStr := range triggerStrs {
