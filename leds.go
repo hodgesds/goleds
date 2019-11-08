@@ -24,6 +24,7 @@ func LEDs() ([]*LED, error) {
 		case mode.IsDir(), mode&os.ModeSymlink != 0:
 			leds = append(leds, &LED{
 				basePath: SysFSBase + "/" + f.Name(),
+				name:     f.Name(),
 			})
 		}
 	}
@@ -40,6 +41,12 @@ type Trigger struct {
 // LED represents an LED.
 type LED struct {
 	basePath string
+	name     string
+}
+
+// Name returns the name of the LED.
+func (l *LED) Name() string {
+	return l.name
 }
 
 // SetBrightness is used to set the brightness of a LED device.
