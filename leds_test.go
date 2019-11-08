@@ -23,4 +23,10 @@ func TestLEDs(t *testing.T) {
 	if _, err := led.Triggers(); err != nil {
 		t.Fatal(err)
 	}
+	if err := led.SetBrightness(0); err != nil {
+		t.Fatal(err)
+	}
+	if err := led.SetTrigger("none"); err != nil {
+		t.Fatal(err)
+	}
 }

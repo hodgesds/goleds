@@ -3,6 +3,7 @@
 package leds
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -39,6 +40,24 @@ type Trigger struct {
 // LED represents an LED.
 type LED struct {
 	basePath string
+}
+
+// SetBrightness is used to set the brightness of a LED device.
+func (l *LED) SetBrightness(b int) error {
+	max, err := l.MaxBrightness()
+	if err != nil {
+		return err
+	}
+	if b > max {
+		return fmt.Errorf("can't set beyond max brightness: %d", max)
+	}
+
+	return ioutil.WriteFile(l.basePath+"/brightness", []byte(string(b)), 0644)
+}
+
+// SetTrigger is used to set the trigger of a LED device.
+func (l *LED) SetTrigger(trigger string) error {
+	return ioutil.WriteFile(l.basePath+"/trigger", []byte(trigger), 0644)
 }
 
 // Brightness returns the brightness setting.
